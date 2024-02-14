@@ -1,6 +1,6 @@
 # nats-publish-consume-example
 
-This example is used to find a minimal example for a publisher / consumer structure based upon https://pkg.go.dev/github.com/nats-io/nats.go@v1.32.0/jetstream#section-readme with NATS running in a Docker container.
+This example is used to find a minimal example for a publisher / consumer structure based upon https://pkg.go.dev/github.com/nats-io/nats.go@v1.32.0/jetstream#readme-basic-usage with NATS running in a Docker container.
 
 # Prerequisite
 
