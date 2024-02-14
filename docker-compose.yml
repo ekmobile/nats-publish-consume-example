@@ -1,0 +1,11 @@
+version: "3"
+services:
+  nats:
+    image: nats:latest
+    volumes:
+      - /datastore
+    command: "--cluster_name NATS --port 4222 --http_port 8222 -js -sd /datastore -DV"
+    ports:
+      - 4222:4222
+      - 6222:6222
+      - 8222:8222
