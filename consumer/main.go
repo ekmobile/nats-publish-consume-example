@@ -19,17 +19,15 @@ func main() {
 	js, _ := jetstream.New(nc)
 
 	c, _ := js.CreateOrUpdateConsumer(ctx, "ORDERS", jetstream.ConsumerConfig{
-		Name:           "CONS",
-		Durable:        "CONS",
-		AckPolicy:      jetstream.AckExplicitPolicy,
-		FilterSubjects: []string{"ORDERS.*"},
+		Durable:   "CONS",
+		AckPolicy: jetstream.AckExplicitPolicy,
 	})
 
 	cons, err := c.Consume(handleConsume, jetstream.ConsumeErrHandler(handleError))
 	if err != nil {
 		panic(err)
 	} else {
-		log.Println(cons)
+		log.Println("cons", cons)
 	}
 	defer cons.Stop()
 }

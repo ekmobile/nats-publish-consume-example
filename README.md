@@ -18,13 +18,17 @@ docker-compose up
 run the publisher
 
 ```bash
-cd publisher && go get && go run . && cd ..
+cd publisher
+go get
+go run .
 ```
 
 run the consumer
 
 ```bash
-cd consumer && go get && go run . && cd ..
+cd consumer
+go get
+go run .
 ```
 
 # Problem
