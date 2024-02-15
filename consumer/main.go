@@ -18,10 +18,13 @@ func main() {
 	nc, _ := nats.Connect(url)
 	js, _ := jetstream.New(nc)
 
-	c, _ := js.CreateOrUpdateConsumer(ctx, "ORDERS", jetstream.ConsumerConfig{
+	c, error := js.CreateOrUpdateConsumer(ctx, "ORDERS", jetstream.ConsumerConfig{
 		Durable:   "CONS",
 		AckPolicy: jetstream.AckExplicitPolicy,
 	})
+	if error != nil {
+		panic(error)
+	}
 
 	cons, err := c.Consume(handleConsume, jetstream.ConsumeErrHandler(handleError))
 	if err != nil {
