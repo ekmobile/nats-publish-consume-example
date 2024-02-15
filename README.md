@@ -34,3 +34,5 @@ go run .
 # Problem
 
 the consumer does not display messages, although it should via the callback.
+
+Root Cause: Main Program exits directly. Wait for it.
