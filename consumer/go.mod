@@ -2,7 +2,7 @@ module consumer
 
 go 1.21.4
 
-require github.com/nats-io/nats.go v1.32.0
+require github.com/nats-io/nats.go v1.33.0
 
 require (
 	github.com/klauspost/compress v1.17.2 // indirect

@@ -18,21 +18,25 @@ func main() {
 	nc, _ := nats.Connect(url)
 	js, _ := jetstream.New(nc)
 
-	c, error := js.CreateOrUpdateConsumer(ctx, "ORDERS", jetstream.ConsumerConfig{
-		Durable:   "CONS",
-		AckPolicy: jetstream.AckExplicitPolicy,
-	})
-	if error != nil {
-		panic(error)
+	ordersStream, err := js.Stream(ctx, "ORDERS")
+	if err != nil {
+		log.Fatalf(err.Error())
 	}
 
-	cons, err := c.Consume(handleConsume, jetstream.ConsumeErrHandler(handleError))
+	ordersConsumer, err := ordersStream.Consumer(ctx, "cons")
 	if err != nil {
-		panic(err)
-	} else {
-		log.Println("cons", cons)
+		log.Fatalf("Could not setup consumer: %s", err.Error())
 	}
-	defer cons.Stop()
+
+	cc, err := ordersConsumer.Consume(handleConsume, jetstream.ConsumeErrHandler(handleError))
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	defer cc.Stop()
+
+	for {
+
+	}
 }
 
 func handleError(consumeCtx jetstream.ConsumeContext, err error) {
