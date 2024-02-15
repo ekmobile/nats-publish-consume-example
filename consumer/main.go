@@ -10,6 +10,8 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 )
 
+var messageCounter = 0
+
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -33,6 +35,11 @@ func main() {
 		log.Println("cons", cons)
 	}
 	defer cons.Stop()
+
+	// block until all 100 published messages have been processed
+	for messageCounter < 100 {
+		time.Sleep(10 * time.Millisecond)
+	}
 }
 
 func handleError(consumeCtx jetstream.ConsumeContext, err error) {
@@ -42,6 +49,7 @@ func handleError(consumeCtx jetstream.ConsumeContext, err error) {
 
 func handleConsume(msg jetstream.Msg) {
 	println("handleConsume")
+	messageCounter++
 	fmt.Printf("Received a JetStream message via callback: %s\n", string(msg.Data()))
 	msg.Ack()
 }
